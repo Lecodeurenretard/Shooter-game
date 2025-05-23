@@ -27,3 +27,4 @@ func on_hit():
 	HP -= 1
 	if HP <= 0:
 		emit_signal("player_dead")
+		queue_free()

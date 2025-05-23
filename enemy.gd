@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	if(collider != null):
 		if collider.get_collider().get_instance_id() == player.get_instance_id():
 			emit_signal("hit_player")
-		free()
+		queue_free()
 
 func on_bullet_creation(bullet : StaticBody2D) -> void:
 	bullet.killed_something.connect(free_if_equal)
