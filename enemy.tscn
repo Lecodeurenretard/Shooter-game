@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://cx5y8lfiulfvp"]
+
+[ext_resource type="Script" uid="uid://bel02tfl5xxpa" path="res://enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://cynt2rj8bxwah" path="res://img/enemy.png" id="2_qi2p4"]
+
+[sub_resource type="Animation" id="Animation_8dqw5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_12j10"]
+resource_name = "enemy_walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.113446, 0.113446, -0.113446]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f3frg"]
+_data = {
+&"RESET": SubResource("Animation_8dqw5"),
+&"enemy_walk": SubResource("Animation_12j10")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8dqw5"]
+radius = 45.0
+height = 100.0
+
+[node name="Enemy" type="AnimatableBody2D" groups=["ennemies"]]
+collision_layer = 2
+sync_to_physics = false
+script = ExtResource("1_4gyqm")
+
+[node name="EnemySprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_qi2p4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_f3frg")
+}
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(1, 9)
+shape = SubResource("CapsuleShape2D_8dqw5")

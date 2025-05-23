@@ -1,0 +1,32 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Shoot'em all"
+run/main_scene="uid://ds073bgau825u"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="uid://hvql5lrv51g0"
+
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
+[global_group]
+
+bullets=""
+ennemies=""
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="enemies"
+2d_physics/layer_3="bullets"

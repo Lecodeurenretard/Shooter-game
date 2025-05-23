@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ds073bgau825u"]
+
+[ext_resource type="Script" uid="uid://bd5d4u7oyhoat" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://hmpn2q5g0234" path="res://Player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://caunn0ej8jojd" path="res://spawnEnemy.gd" id="3_h2yge"]
+
+[node name="Base" type="Node2D"]
+script = ExtResource("1_h2yge")
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("3_h2yge")
+speed = 50.0
+spawn_min = 1.0
+spawn_max = 1.0
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner"]
+wait_time = 0.5
+autostart = true
+
+[connection signal="player_dead" from="Player" to="." method="to_game_over"]
+[connection signal="enemy_spawned" from="EnemySpawner" to="Player" method="on_enemy_spawn"]
