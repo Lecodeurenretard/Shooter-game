@@ -1,17 +1,21 @@
 extends StaticBody2D
 
-@export var speed : float = 10
+## How much the bullet's spawn position is shifted from the player's position 
+@export var spawn_pos_shift : float = 100
+@export var speed : float = 400
 
 signal killed_something(smth : CollisionObject2D)
 
 var speedVec := Vector2.ZERO
 var dir := Vector2.ZERO:
 	set(val):
+		dir = val
 		speedVec = val * speed
 
 
 func _enter_tree() -> void:
 	dir = (get_global_mouse_position() - global_position).normalized()
+	position += dir * spawn_pos_shift	# offset the bullet toward the barrel
 
 func _physics_process(delta: float) -> void:
 	var collider := move_and_collide(speedVec * delta)

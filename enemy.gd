@@ -1,7 +1,7 @@
 extends AnimatableBody2D
 
 @export var speed : float = 110
-@onready var player : Node2D = get_node("../../Player")
+@onready var player : Node2D = get_node("../Player")	# Unique name inaccessible from this scene 
 
 signal hit_player()
 

@@ -4,3 +4,4 @@
 
 # Custom ignores
 build/*
+*.zip

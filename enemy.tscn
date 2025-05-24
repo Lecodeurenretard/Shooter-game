@@ -20,7 +20,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_12j10"]
 resource_name = "enemy_walk"
-length = 0.6
+length = 0.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -29,7 +29,7 @@ tracks/0/path = NodePath("EnemySprite:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6),
+"times": PackedFloat32Array(0, 0.15, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [-0.113446, 0.113446, -0.113446]
@@ -49,6 +49,7 @@ height = 100.0
 collision_layer = 2
 sync_to_physics = false
 script = ExtResource("1_4gyqm")
+speed = 140.0
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_qi2p4")

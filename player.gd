@@ -5,7 +5,13 @@ const bullet_scene : PackedScene = preload("res://bullet.tscn")
 @export var HP : int = 5
 
 signal create_bullet(bullet : StaticBody2D)
+signal player_hit(hp_left : int)
 signal player_dead
+
+func _ready() -> void:
+	if HP <= 0:
+		emit_signal("player_dead")
+		queue_free()
 
 func _input(event: InputEvent) -> void:
 	if event is not InputEventMouseButton or event.is_released():
@@ -13,6 +19,7 @@ func _input(event: InputEvent) -> void:
 	
 	var bullet := bullet_scene.instantiate()
 	add_sibling(bullet)
+	get_parent().move_child(bullet, bullet.get_index() - 1)	# Move the bullet on top of the player (=> is drawn below)
 	emit_signal("create_bullet", bullet)
 
 func _process(_delta: float) -> void:
@@ -25,6 +32,7 @@ func on_enemy_spawn(enemy: AnimatableBody2D) -> void:
 
 func on_hit():
 	HP -= 1
+	emit_signal("player_hit", HP)
 	if HP <= 0:
 		emit_signal("player_dead")
 		queue_free()

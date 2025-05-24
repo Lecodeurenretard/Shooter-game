@@ -1,25 +1,91 @@
-[gd_scene load_steps=4 format=3 uid="uid://ds073bgau825u"]
+[gd_scene load_steps=11 format=3 uid="uid://ds073bgau825u"]
 
 [ext_resource type="Script" uid="uid://bd5d4u7oyhoat" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://hmpn2q5g0234" path="res://Player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dubt3m3gnxip0" path="res://set_enemy_path.gd" id="3_7mycd"]
 [ext_resource type="Script" uid="uid://caunn0ej8jojd" path="res://spawnEnemy.gd" id="3_h2yge"]
+[ext_resource type="FontFile" uid="uid://chipqrb5ntgqx" path="res://fonts/Lilita_One/LilitaOne-Regular.ttf" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dyyra0vgwkrxv" path="res://update_hp.gd" id="5_lquwl"]
+
+[sub_resource type="Curve2D" id="Curve2D_lquwl"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7mycd"]
+
+[sub_resource type="FontVariation" id="FontVariation_lquwl"]
+base_font = ExtResource("4_1bvp3")
+
+[sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
+font = SubResource("FontVariation_lquwl")
+font_size = 50
 
 [node name="Base" type="Node2D"]
 script = ExtResource("1_h2yge")
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="EnemySpawner" type="Node2D" parent="."]
-script = ExtResource("3_h2yge")
-speed = 50.0
-spawn_min = 1.0
-spawn_max = 1.0
+[node name="EnemyPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_lquwl")
+script = ExtResource("3_7mycd")
 
-[node name="SpawnTimer" type="Timer" parent="EnemySpawner"]
-wait_time = 0.5
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyPath"]
+rotates = false
+
+[node name="EnemySpawner" type="Node2D" parent="EnemyPath/PathFollow2D"]
+script = ExtResource("3_h2yge")
+speed = 1000.0
+spawn_max = 0.7
+
+[node name="SpawnTimer" type="Timer" parent="EnemyPath/PathFollow2D/EnemySpawner"]
+wait_time = 0.3
 autostart = true
 
+[node name="SpawnSprite" type="Sprite2D" parent="EnemyPath/PathFollow2D"]
+visible = false
+scale = Vector2(10, 10)
+texture = SubResource("CanvasTexture_7mycd")
+
+[node name="UI" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Health" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -32.0
+offset_right = 26.5
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HP" type="Label" parent="UI/Health"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -11.5
+offset_right = 5.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "5"
+label_settings = SubResource("LabelSettings_1bvp3")
+script = ExtResource("5_lquwl")
+
 [connection signal="player_dead" from="Player" to="." method="to_game_over"]
-[connection signal="enemy_spawned" from="EnemySpawner" to="Player" method="on_enemy_spawn"]
+[connection signal="player_hit" from="Player" to="UI/Health/HP" method="update"]
+[connection signal="enemy_spawned" from="EnemyPath/PathFollow2D/EnemySpawner" to="Player" method="on_enemy_spawn"]
