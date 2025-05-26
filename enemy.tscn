@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cx5y8lfiulfvp"]
 
 [ext_resource type="Script" uid="uid://bel02tfl5xxpa" path="res://enemy.gd" id="1_4gyqm"]
-[ext_resource type="Texture2D" uid="uid://cynt2rj8bxwah" path="res://img/enemy.png" id="2_qi2p4"]
+[ext_resource type="Texture2D" uid="uid://cynt2rj8bxwah" path="res://img/png/enemy.png" id="2_qi2p4"]
 
 [sub_resource type="Animation" id="Animation_8dqw5"]
 length = 0.001
