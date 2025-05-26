@@ -1,3 +1,103 @@
-[gd_scene format=3 uid="uid://blqce1vge0wev"]
+[gd_scene load_steps=4 format=3 uid="uid://blqce1vge0wev"]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource type="Script" uid="uid://d3sfo1eiwt016" path="res://buttons.gd" id="1_40baj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_40baj"]
+font_size = 90
+
+[sub_resource type="LabelSettings" id="LabelSettings_4g1ep"]
+font_size = 50
+outline_size = 1
+
+[node name="GameOverGUI" type="Control"]
+top_level = true
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0.882353)
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.06
+anchor_right = 0.94
+anchor_bottom = 0.44
+
+[node name="Label" type="Label" parent="Panel/CenterContainer"]
+layout_mode = 2
+text = "You are Dead"
+label_settings = SubResource("LabelSettings_40baj")
+
+[node name="Control" type="Control" parent="Panel"]
+layout_mode = 1
+anchor_top = 0.46
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.488007
+script = ExtResource("1_40baj")
+
+[node name="Continue" type="Button" parent="Panel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32
+anchor_top = 0.1
+anchor_right = 0.68
+anchor_bottom = 0.3
+offset_bottom = 0.000404358
+grow_horizontal = 2
+grow_vertical = 2
+button_mask = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/Control/Continue"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 5.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/Control/Continue/CenterContainer"]
+layout_mode = 2
+text = "Continue"
+label_settings = SubResource("LabelSettings_4g1ep")
+
+[node name="Quit" type="Button" parent="Panel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32
+anchor_top = 0.54
+anchor_right = 0.68
+anchor_bottom = 0.74
+grow_horizontal = 2
+grow_vertical = 2
+button_mask = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/Control/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 5.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/Control/Quit/CenterContainer"]
+layout_mode = 2
+text = "Quit"
+label_settings = SubResource("LabelSettings_4g1ep")
+
+[connection signal="pressed" from="Panel/Control/Continue" to="Panel/Control" method="restart"]
+[connection signal="pressed" from="Panel/Control/Quit" to="Panel/Control" method="quit"]
