@@ -20,5 +20,5 @@ func _enter_tree() -> void:
 func _physics_process(delta: float) -> void:
 	var collider := move_and_collide(speedVec * delta)
 	if(collider != null):
-		emit_signal("killed_something", collider.get_collider())
+		killed_something.emit(collider.get_collider())
 		queue_free()

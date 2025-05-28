@@ -1,12 +1,14 @@
 extends Path2D
 
-@onready var WIN_WIDTH := get_window().size.x
-@onready var WIN_HEIGHT := get_window().size.y
-@onready var upper_left_corner := Vector2(-WIN_WIDTH/2.0, -WIN_HEIGHT/2.0)
-@onready var bottom_right_corner := Vector2(WIN_WIDTH/2.0, WIN_HEIGHT/2.0)
-
 func _ready() -> void:
+	set_points()
+
+func set_points() -> void:
 	curve.clear_points()
+	
+	var screen_dim			:= get_window().size
+	var upper_left_corner	:= -screen_dim/2.0
+	var bottom_right_corner	:= +screen_dim/2.0
 	var points := [		# The corners of the screen
 		upper_left_corner,
 		Vector2(bottom_right_corner.x, upper_left_corner.y),
