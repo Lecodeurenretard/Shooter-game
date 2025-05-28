@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://blqce1vge0wev"]
 
-[ext_resource type="Script" uid="uid://d3sfo1eiwt016" path="res://buttons.gd" id="1_40baj"]
+[ext_resource type="Script" uid="uid://d3sfo1eiwt016" path="res://scripts/buttons.gd" id="1_40baj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_40baj"]
 font_size = 90
