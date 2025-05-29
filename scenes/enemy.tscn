@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx5y8lfiulfvp"]
+[gd_scene load_steps=8 format=3 uid="uid://cx5y8lfiulfvp"]
 
 [ext_resource type="Script" uid="uid://bel02tfl5xxpa" path="res://scripts/enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://cynt2rj8bxwah" path="res://img/png/enemy.png" id="2_qi2p4"]
+[ext_resource type="AudioStream" uid="uid://bgvcvpnq1my71" path="res://sounds/pop.mp3" id="3_4ra3w"]
 
 [sub_resource type="Animation" id="Animation_8dqw5"]
 length = 0.001
@@ -49,8 +50,6 @@ height = 100.0
 collision_layer = 2
 sync_to_physics = false
 script = ExtResource("1_4gyqm")
-speed = 140.0
-prevent_pause_animation = true
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_qi2p4")
@@ -63,3 +62,7 @@ libraries = {
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(1, 9)
 shape = SubResource("CapsuleShape2D_8dqw5")
+
+[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_4ra3w")
+volume_db = 12.0

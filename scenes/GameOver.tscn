@@ -75,6 +75,7 @@ anchor_bottom = 0.325
 offset_bottom = 0.000404358
 grow_horizontal = 2
 grow_vertical = 2
+disabled = true
 button_mask = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="Panel/Control/Continue"]
@@ -89,7 +90,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel/Control/Continue/CenterContainer"]
 layout_mode = 2
-text = "Continue"
+text = "Restart"
 label_settings = SubResource("LabelSettings_4g1ep")
 
 [node name="Quit" type="Button" parent="Panel/Control"]
@@ -102,6 +103,7 @@ anchor_bottom = 0.765
 offset_left = -3.05176e-05
 grow_horizontal = 2
 grow_vertical = 2
+disabled = true
 button_mask = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="Panel/Control/Quit"]
@@ -119,5 +121,11 @@ layout_mode = 2
 text = "Quit"
 label_settings = SubResource("LabelSettings_4g1ep")
 
+[node name="EnableButton" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
 [connection signal="pressed" from="Panel/Control/Continue" to="Panel/Control" method="restart"]
 [connection signal="pressed" from="Panel/Control/Quit" to="Panel/Control" method="quit"]
+[connection signal="timeout" from="EnableButton" to="Panel/Control" method="enable_butt" flags=6]

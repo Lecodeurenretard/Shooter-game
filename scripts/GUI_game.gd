@@ -2,6 +2,7 @@ extends CanvasLayer
 
 func _enter_tree() -> void:
 	%Player.ready.connect(func(): update_HP(%Player.HP)) 	# automaticly update the health
+	$"/root/Score".passed_milestone.connect(func(): $PointPanel/PointsNotification.play())
 	$"/root/Score".score_set.connect(update_score)
 	update_score($"/root/Score".score)
 	
@@ -16,10 +17,10 @@ func update_offset() -> void:
 	# those are the reasons this line exists
 
 func update_HP(health : int) -> void:
-	$Health/HP.text = str(health)
+	$HealthPanel/HP.text = str(health)
 
 func update_score(points : int) -> void:
-	$Points.text = str(points)
+	$PointPanel/CenterContainer/Points.text = str(points)
 
 func hide_ui() -> void:
 	visible = false

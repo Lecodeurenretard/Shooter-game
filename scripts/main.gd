@@ -22,7 +22,7 @@ func _input(event: InputEvent) -> void:
 			handle_unpause()
 		else:
 			handle_pause()
-
+	
 func to_game_over() -> void:
 	get_tree().change_scene_to_packed(sc_game_over)
 

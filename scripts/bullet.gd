@@ -23,6 +23,6 @@ func _physics_process(delta: float) -> void:
 		return;
 
 	var collider := move_and_collide(speedVec * delta)
-	if(collider != null):
+	if collider != null:
 		killed_something.emit(collider.get_collider())
 		queue_free()

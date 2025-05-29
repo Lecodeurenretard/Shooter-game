@@ -2,7 +2,7 @@ extends AnimatableBody2D
 
 const flee_texture := preload("res://img/png/enemy_worry.png")
 
-@export var speed 				: float = 110
+@export var speed 				: float = 140
 
 ## Score when killed
 @export var score_killed 		: int = 50
@@ -40,6 +40,7 @@ func _process(delta: float) -> void:
 		if collider.get_collider().get_instance_id() == player.get_instance_id():
 			$"/root/Score".score += score_hit_player
 			hit_player.emit()
+		
 		queue_free()
 
 func on_bullet_creation(bullet : StaticBody2D) -> void:
@@ -56,6 +57,14 @@ func unpausing() -> void:
 func die_if_equal(toCompare : AnimatableBody2D):
 	if toCompare.get_instance_id() == get_instance_id():
 		$"/root/Score".score += score_killed
+		
+		collision_layer = 0	# Prevent bullet from colling
+		collision_mask = 0	
+		visible = false
+		
+		$SoundEffects.pitch_scale = randf_range(.9, 1.1)
+		$SoundEffects.play()
+		await $SoundEffects.finished 
 		queue_free()
 
 func flee() -> void:

@@ -8,6 +8,7 @@ func scale_img() -> void:
 	$LogoButt/CenterContainer/Logo.scale.y = get_window().size.y /600.0
 
 func enter_game() -> void:
+	$"/root/Score".freeze_score = false
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func press_title() -> void:

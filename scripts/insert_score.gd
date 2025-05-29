@@ -1,4 +1,4 @@
 extends Label
 
 func _ready() -> void:
-	text += str($"/root/Score".score) + '.'
+	text += str($"/root/Score".score)
