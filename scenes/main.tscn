@@ -41,7 +41,6 @@ script = ExtResource("1_tefeu")
 
 [node name="Player" parent="." instance=ExtResource("2_o6xl0")]
 unique_name_in_owner = true
-can_be_paused = false
 explosion_overflow = Vector2(2200, 2200)
 
 [node name="InvicibilityTimer" type="Timer" parent="Player"]
@@ -50,6 +49,10 @@ one_shot = true
 
 [node name="AnimationTimer" type="Timer" parent="Player"]
 wait_time = 0.1
+
+[node name="CooldownTimer" type="Timer" parent="Player"]
+wait_time = 0.1
+one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -121,7 +124,6 @@ label_settings = SubResource("LabelSettings_7mycd")
 [node name="Explosion" type="Sprite2D" parent="."]
 visible = false
 z_index = 2
-scale = Vector2(1.20917, 1)
 texture = SubResource("GradientTexture2D_o6xl0")
 region_rect = Rect2(-230.405, 0, 438.517, 87.7643)
 

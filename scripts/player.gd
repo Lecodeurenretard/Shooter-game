@@ -13,6 +13,7 @@ const bullet_scene : PackedScene = preload("res://scenes/bullet.tscn")
 ## The time took by the explosion when suiciding
 @export var explosion_time : float = 2.0
 @export var explosion_overflow := Vector2(2200, 2400)
+@export var explosion_camera_shake := 5
 
 @onready var base_node := get_node("..")
 @onready var explosionSprite := get_node("../Explosion")
@@ -33,22 +34,35 @@ func enable_hits() -> void:
 	can_be_hit = true
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shoot"):
+	if base_node.is_game_paused and can_be_paused:
+		return;
+	
+	# Disabling shooting if the cooldown isn't finished. If the game is paused, ignore the cooldown
+	if event.is_action_pressed("shoot") and ($CooldownTimer.is_stopped() or base_node.is_game_paused):
+		if not base_node.is_game_paused:
+			$CooldownTimer.start()
+		
 		var bullet := bullet_scene.instantiate()
 		add_sibling(bullet)
-		get_parent().move_child(bullet, bullet.get_index() - 1)	# Move the bullet on top of the player (=> is drawn below)
+		get_parent().move_child(bullet, bullet.get_index() - 1)	# Move the bullet on top of the player (=> is drawn above the bullet)
 		create_bullet.emit(bullet)
 		return
 	
+	# also checking for pause because even if the player cheats, they should not be able to suicide while paused
 	if event.is_action_pressed("suicide") and not base_node.is_game_paused:
 		player_suicided.emit()
-		explosionSprite.visible = true
 		
+		explosionSprite.visible = true
 		var nb_iter : float = explosion_time / $AnimationTimer.wait_time
+		var camera := get_node("../Camera2D")
 		$AnimationTimer.start()
 		for i in range(nb_iter):
 			explosionSprite.texture.width +=  (get_window().size.x + explosion_overflow.x) / nb_iter
 			explosionSprite.texture.height += (get_window().size.y + explosion_overflow.y) / nb_iter
+			camera.offset = Vector2(
+				(randf() * explosion_camera_shake * 2 - explosion_camera_shake) * i,
+				(randf() * explosion_camera_shake * 2 - explosion_camera_shake) * i
+			)
 			await $AnimationTimer.timeout
 		player_dead.emit()
 
