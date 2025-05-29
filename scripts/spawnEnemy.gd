@@ -15,11 +15,17 @@ const enemy_scene := preload("res://scenes/enemy.tscn")
 @onready var upper_left_corner := -WIN_DIMENSIONS/2.0
 @onready var bottom_right_corner := WIN_DIMENSIONS/2.0
 
+## The remmaining time before the timer stops
+## Is only updated on pause (else use the `.time_left` property of the timer)
+var timer_time_left := 0.0
+
 func _ready() -> void:
 	global_position = upper_left_corner
 	$SpawnTimer.timeout.connect(spawn_enemy)
 
 func _process(delta: float) -> void:
+	if get_tree().get_root().get_child(1).is_game_paused:	# The `Base` node
+		return;
 	get_parent().progress += speed * delta
 
 func spawn_enemy():
@@ -30,3 +36,10 @@ func spawn_enemy():
 	%Player.add_sibling(enemy)
 	
 	enemy_spawned.emit(enemy)
+
+func pausing() -> void:
+	timer_time_left = $SpawnTimer.time_left
+	$SpawnTimer.stop()
+
+func unpausing() -> void:
+	$SpawnTimer.start(timer_time_left)

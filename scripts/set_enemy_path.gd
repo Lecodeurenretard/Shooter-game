@@ -1,6 +1,7 @@
 extends Path2D
 
 func _ready() -> void:
+	get_tree().get_root().size_changed.connect(set_points)
 	set_points()
 
 func set_points() -> void:

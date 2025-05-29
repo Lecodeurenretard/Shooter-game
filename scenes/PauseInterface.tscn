@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwfbryng7kx6q"]
+
+[ext_resource type="FontFile" uid="uid://chipqrb5ntgqx" path="res://fonts/Lilita_One/LilitaOne-Regular.ttf" id="1_2fkpq"]
+[ext_resource type="Script" uid="uid://ci4g7cvtt0es1" path="res://scripts/pause_interface.gd" id="1_jnets"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jnets"]
+font = ExtResource("1_2fkpq")
+font_size = 100
+
+[node name="PauseInterface" type="CanvasLayer"]
+script = ExtResource("1_jnets")
+
+[node name="Continue" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.24
+anchor_top = 0.22
+anchor_right = 0.76
+anchor_bottom = 0.42
+
+[node name="CenterContainer" type="CenterContainer" parent="Continue"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Continue/CenterContainer"]
+layout_mode = 2
+text = "Continue"
+label_settings = SubResource("LabelSettings_jnets")
+
+[node name="Quit" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.24
+anchor_top = 0.58
+anchor_right = 0.76
+anchor_bottom = 0.78
+
+[node name="CenterContainer" type="CenterContainer" parent="Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Quit/CenterContainer"]
+layout_mode = 2
+text = "Give up"
+label_settings = SubResource("LabelSettings_jnets")
+
+[connection signal="pressed" from="Continue" to="." method="unpause"]
+[connection signal="pressed" from="Quit" to="." method="quit"]

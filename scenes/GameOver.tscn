@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://blqce1vge0wev"]
 
 [ext_resource type="Script" uid="uid://d3sfo1eiwt016" path="res://scripts/GO_buttons.gd" id="1_6bcno"]
-[ext_resource type="Script" uid="uid://8dgwihtosjgr" path="res://scenes/insert_score.gd" id="1_qae0b"]
+[ext_resource type="Script" uid="uid://8dgwihtosjgr" path="res://scripts/insert_score.gd" id="1_qae0b"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_40baj"]
 font_size = 90

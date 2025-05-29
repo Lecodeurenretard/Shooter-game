@@ -5,6 +5,7 @@ extends StaticBody2D
 @export var speed : float = 400
 
 signal killed_something(smth : CollisionObject2D)
+@onready var base_node := get_node("..").get_tree().get_root().get_child(1)
 
 var speedVec := Vector2.ZERO
 var dir := Vector2.ZERO:
@@ -18,6 +19,9 @@ func _enter_tree() -> void:
 	position += dir * spawn_pos_shift	# offset the bullet toward the barrel
 
 func _physics_process(delta: float) -> void:
+	if base_node.is_game_paused:
+		return;
+
 	var collider := move_and_collide(speedVec * delta)
 	if(collider != null):
 		killed_something.emit(collider.get_collider())

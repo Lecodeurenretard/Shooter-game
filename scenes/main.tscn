@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ds073bgau825u"]
+[gd_scene load_steps=14 format=3 uid="uid://ds073bgau825u"]
 
 [ext_resource type="Script" uid="uid://bd5d4u7oyhoat" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://hmpn2q5g0234" path="res://scenes/Player.tscn" id="2_o6xl0"]
@@ -22,15 +22,34 @@ font_size = 50
 font = SubResource("FontVariation_lquwl")
 font_size = 50
 
+[sub_resource type="Gradient" id="Gradient_tefeu"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 0.560784, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o6xl0"]
+gradient = SubResource("Gradient_tefeu")
+width = 1
+height = 1
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.2, 0.2)
+
 [node name="Base" type="Node2D"]
 script = ExtResource("1_tefeu")
 
 [node name="Player" parent="." instance=ExtResource("2_o6xl0")]
 unique_name_in_owner = true
+can_be_paused = false
+explosion_overflow = Vector2(2200, 2200)
 
 [node name="InvicibilityTimer" type="Timer" parent="Player"]
 wait_time = 0.25
 one_shot = true
+
+[node name="AnimationTimer" type="Timer" parent="Player"]
+wait_time = 0.1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -59,11 +78,10 @@ script = ExtResource("5_o6xl0")
 metadata/_edit_use_anchors_ = true
 
 [node name="Health" type="Panel" parent="UI"]
-anchors_preset = -1
-anchor_left = -0.02
-anchor_top = -0.04
-anchor_right = 0.02
-anchor_bottom = 0.04
+offset_left = -27.0
+offset_top = -24.0
+offset_right = 28.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -100,6 +118,18 @@ grow_horizontal = 2
 text = "23453"
 label_settings = SubResource("LabelSettings_7mycd")
 
+[node name="Explosion" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+scale = Vector2(1.20917, 1)
+texture = SubResource("GradientTexture2D_o6xl0")
+region_rect = Rect2(-230.405, 0, 438.517, 87.7643)
+
+[connection signal="pause" from="." to="EnemyPath/PathFollow2D/EnemySpawner" method="pausing"]
+[connection signal="unpause" from="." to="EnemyPath/PathFollow2D/EnemySpawner" method="unpausing"]
 [connection signal="player_dead" from="Player" to="." method="to_game_over"]
 [connection signal="player_hit" from="Player" to="UI" method="update_HP"]
+[connection signal="player_suicided" from="Player" to="." method="prevent_pause"]
+[connection signal="player_suicided" from="Player" to="EnemyPath/PathFollow2D/EnemySpawner" method="pausing" flags=6]
+[connection signal="player_suicided" from="Player" to="UI" method="hide_ui" flags=6]
 [connection signal="enemy_spawned" from="EnemyPath/PathFollow2D/EnemySpawner" to="Player" method="on_enemy_spawn"]
