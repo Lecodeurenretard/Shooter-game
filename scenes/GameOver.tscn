@@ -201,6 +201,7 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 
 [node name="Template" type="HSplitContainer" parent="HighscorePanel/OtherHighscores/ScrollContainer/MarginContainer/Container"]
+visible = false
 layout_mode = 2
 split_offset = 115
 
