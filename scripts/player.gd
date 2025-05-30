@@ -25,11 +25,11 @@ signal player_suicided
 signal player_dead
 
 func _ready() -> void:
-	if HP <= 0:
-		player_dead.emit()
-		queue_free()
-	
-	$InvicibilityTimer.timeout.connect(enable_hits)
+	if HP > 0:
+		$InvicibilityTimer.timeout.connect(enable_hits)
+		return;
+	player_dead.emit()
+	queue_free()
 
 func enable_hits() -> void:
 	can_be_hit = true
@@ -48,7 +48,7 @@ func _input(event: InputEvent) -> void:
 		add_sibling(bullet)
 		get_parent().move_child(bullet, bullet.get_index() - 1)	# Move the bullet on top of the player (=> is drawn above the bullet)
 		create_bullet.emit(bullet)
-		return
+		return;
 	
 	# also checking for pause because even if the player cheats, they should not be able to suicide while paused
 	if event.is_action_pressed("suicide") and not base_node.is_game_paused:

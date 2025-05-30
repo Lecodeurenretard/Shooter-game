@@ -20,8 +20,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not disable_pause:
 		if is_game_paused:
 			handle_unpause()
-		else:
-			handle_pause()
+			return
+		handle_pause()
 	
 func to_game_over() -> void:
 	get_tree().change_scene_to_packed(sc_game_over)
@@ -37,7 +37,6 @@ func handle_pause() -> void:
 	is_game_paused = true
 	
 	sc_pause_instance = sc_pause.instantiate()
-	
 	sc_pause_instance.continuing.connect(handle_unpause)
 	
 	add_sibling(sc_pause_instance)

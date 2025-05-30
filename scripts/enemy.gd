@@ -55,17 +55,19 @@ func unpausing() -> void:
 		$AnimationPlayer.play("enemy_walk")
 
 func die_if_equal(toCompare : AnimatableBody2D):
-	if toCompare.get_instance_id() == get_instance_id():
-		$"/root/Score".score += score_killed
-		
-		collision_layer = 0	# Prevent bullet from colling
-		collision_mask = 0	
-		visible = false
-		
-		$SoundEffects.pitch_scale = randf_range(.9, 1.1)
-		$SoundEffects.play()
-		await $SoundEffects.finished 
-		queue_free()
+	if toCompare.get_instance_id() != get_instance_id():
+		return;
+	
+	$"/root/Score".score += score_killed
+	
+	collision_layer = 0	# Prevent bullet from colling
+	collision_mask = 0	
+	visible = false
+	
+	$SoundEffects.pitch_scale = randf_range(.9, 1.1)
+	$SoundEffects.play()
+	await $SoundEffects.finished 
+	queue_free()
 
 func flee() -> void:
 	speed *= -.5
