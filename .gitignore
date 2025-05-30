@@ -5,3 +5,4 @@
 # Custom ignores
 build/*
 *.zip
+*.save

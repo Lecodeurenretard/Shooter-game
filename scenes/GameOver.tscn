@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://blqce1vge0wev"]
+[gd_scene load_steps=7 format=3 uid="uid://blqce1vge0wev"]
 
 [ext_resource type="Script" uid="uid://d3sfo1eiwt016" path="res://scripts/GO_buttons.gd" id="1_6bcno"]
 [ext_resource type="Script" uid="uid://8dgwihtosjgr" path="res://scripts/insert_score.gd" id="1_qae0b"]
+[ext_resource type="Script" uid="uid://bagwot26h5fsd" path="res://scenes/highscore_panel.gd" id="3_vuicl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_40baj"]
 font_size = 90
@@ -10,7 +11,7 @@ font_size = 90
 font_size = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_4g1ep"]
-font_size = 50
+font_size = 15
 outline_size = 1
 
 [node name="GameOverGUI" type="Control"]
@@ -126,6 +127,81 @@ wait_time = 0.5
 one_shot = true
 autostart = true
 
+[node name="HighscorePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.804
+anchor_top = 0.5
+anchor_right = 0.98
+anchor_bottom = 0.965
+script = ExtResource("3_vuicl")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="HighscorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.2
+split_offset = 120
+dragging_enabled = false
+
+[node name="Pseudo" type="LineEdit" parent="HighscorePanel/HSplitContainer"]
+layout_mode = 2
+placeholder_text = "Enter pseudonym"
+context_menu_enabled = false
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+select_all_on_focus = true
+
+[node name="SubmitScore" type="Button" parent="HighscorePanel/HSplitContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HighscorePanel/HSplitContainer/SubmitScore"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 5.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HighscorePanel/HSplitContainer/SubmitScore/CenterContainer"]
+layout_mode = 2
+text = "Submit"
+label_settings = SubResource("LabelSettings_4g1ep")
+
+[node name="OtherHighscores" type="Panel" parent="HighscorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.22
+anchor_right = 0.95
+anchor_bottom = 0.95
+
+[node name="Container" type="VBoxContainer" parent="HighscorePanel/OtherHighscores"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Template" type="HSplitContainer" parent="HighscorePanel/OtherHighscores/Container"]
+visible = false
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HighscorePanel/OtherHighscores/Container/Template"]
+layout_mode = 2
+text = "jojo"
+
+[node name="Highscore" type="Label" parent="HighscorePanel/OtherHighscores/Container/Template"]
+layout_mode = 2
+text = "123456"
+horizontal_alignment = 2
+
 [connection signal="pressed" from="Panel/Control/Continue" to="Panel/Control" method="restart"]
 [connection signal="pressed" from="Panel/Control/Quit" to="Panel/Control" method="quit"]
 [connection signal="timeout" from="EnableButton" to="Panel/Control" method="enable_butt" flags=6]
+[connection signal="pressed" from="HighscorePanel/HSplitContainer/SubmitScore" to="HighscorePanel" method="handle_highscore_input"]
